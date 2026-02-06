@@ -1,17 +1,62 @@
 const express = require("express");
+const fs = require("fs");
 const app = express();
+const port = 3000;
+let editId = null;
+let setData = [];
+
+// app.get("/about", (req, res) => {
+//   res.send("about page");
+//   // res.redirect("/");
+// });
+// app.get("/contact", (req, res) => {
+//   res.send("contact page");
+// });
+// app.get("/demo", (req, res) => {
+//   res.send("demo page");
+// });
+
+const readFile = fs.readFileSync("data.json", "utf-8");
+if (readFile != "") {
+  setData = JSON.parse(readFile);
+}
 
 app.get("/", (req, res) => {
-  res.send("hellooo this is home page");
-});
-app.get("/about", (req, res) => {
-  res.send("hellooo this is about page");
-});
-app.get("/contact", (req, res) => {
-  res.send("hellooo this is contact page");
-});
-app.get("/demo", (req, res) => {
-  res.send("hellooo this is demo page");
+  res.render("index.ejs", { setData, edit: null });
 });
 
-app.listen(3000);
+app.get("/getData", (req, res) => {
+  const data = req.query;
+  console.log(data);
+
+  if (editId != null) {
+    setData[editId] = data;
+    editId = null;
+  } else {
+    setData.push(data);
+  }
+
+  fs.writeFileSync("data.json", JSON.stringify(setData));
+
+  res.redirect("/");
+});
+
+app.get("/delData/:id", (req, res) => {
+  const index = req.params.id;
+  setData.splice(index, 1);
+
+  fs.writeFileSync("data.json", JSON.stringify(setData));
+  res.redirect("/");
+});
+
+app.get("/editData/:id", (req, res) => {
+  editId = req.params.id;
+  const edit = setData[editId];
+  console.log(edit);
+
+  res.render("index.ejs", { edit, setData });
+});
+
+app.listen(port, () => {
+  console.log(`App listening on port ${port}`);
+});

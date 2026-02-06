@@ -1,0 +1,158 @@
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        form h1 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            margin-top: 30px;
+            width: 90%;
+            max-width: 800px;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        thead th {
+            background-color: #343a40;
+            color: white;
+            font-weight: bold;
+        }
+
+        .btnDel {
+            background-color: #dc3545;
+            color: white;
+            padding: 5px 12px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .btnDel:hover {
+            background-color: #c82333;
+        }
+
+        .btnEdit {
+            background-color: #ffc107;
+            color: #212529;
+            padding: 6px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            display: inline-block;
+            margin-right: 5px;
+            transition: background 0.3s;
+        }
+
+        .btnEdit:hover {
+            background-color: #e0a800;
+        }
+    </style>
+</head>
+
+<form action="/getData">
+    <h1>
+        Log In
+    </h1>
+    Name: <input type="text" name="name" value="<%= edit ? edit.name : ''  %>"><br><br>
+    Email: <input type="text" name="email" value="<%= edit ? edit.email : ''  %>"><br><br>
+    Password: <input type="password" name="password" value="<%= edit ? edit.password : ''  %>"><br><br>
+    <button type="submit">
+        <%= edit ? 'Update' : 'Submit' %>
+    </button>
+    <br><br>
+
+</form>
+
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Name </th>
+            <th>Email</th>
+            <th>Password</th>
+            <th colspan="2">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% setData.map((i,index)=>{
+            %>
+            <tr>
+                <td>
+                    <%= i.name %>
+                </td>
+                <td>
+                    <%= i.email %>
+                </td>
+                <td>
+                    <%= i.password %>
+                </td>
+                <td>
+                    <a class="btnEdit" href="/editData/<%= index %>">Update</a>
+                </td>
+                <td>
+                    <a class="btnDel" onclick="return confirm('Are you sure you want to delete?')"
+                        href="/delData/<%= index %>">Delete</a>
+                </td>
+            </tr>
+            <% }) %>
+    </tbody>
+</table>
