@@ -1,3 +1,4 @@
+const { name } = require("ejs");
 const express = require("express");
 const fs = require("fs");
 const app = express();
@@ -26,6 +27,19 @@ app.get("/", (req, res) => {
 });
 
 app.get("/getData", (req, res) => {
+  const { name, email, phone_number, city, password } = req.query;
+
+  if (
+    name === "" ||
+    email === "" ||
+    phone_number === "" ||
+    city === "" ||
+    password === ""
+  ) {
+    console.log("Validation Failed: Empty Fields");
+    return res.redirect("/");
+  }
+
   const data = req.query;
   console.log(data);
 
