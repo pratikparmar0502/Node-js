@@ -57,7 +57,7 @@
         table {
             margin-top: 30px;
             width: 90%;
-            max-width: 800px;
+            max-width: 1000px;
             border-collapse: collapse;
             background: white;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
@@ -114,9 +114,11 @@
     </h1>
     Name <input type="text" name="name" value="<%= edit ? edit.name : ''  %>"><br><br>
     Email <input type="text" name="email" value="<%= edit ? edit.email : ''  %>"><br><br>
-    Password <input type="password" name="password" value="<%= edit ? edit.password : ''  %>"><br><br>
+    Password <input type="password" minlength="6" maxlength="6" name="password"
+        value="<%= edit ? edit.password : ''  %>"><br><br>
     Phone Number <input type="number" name="phone_number" value="<%= edit ? edit.phone_number : '' %>" id=""><br><br>
-    City <br> <input type="text" name="city" id="" value="<%= edit ? edit.city : '' %>"><br><br>
+    City <br>
+    <input type="text" name="city" id="" value="<%= edit ? edit.city : '' %>"><br><br>
     <button type="submit">
         <%= edit ? 'Update' : 'Submit' %>
     </button>
@@ -146,6 +148,11 @@
                 <td>
                     <%= i.email %>
                 </td>
+                <!-- <td>
+                    <% if(i.password){ %>
+                        ******
+                        <% } %>
+                </td> -->
                 <td>
                     <%= i.password %>
                 </td>
